@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TransactionStatus {
+  Pending
+  Failed
+  Successful
+}
+
+model Transaction {
+  id     Int               @id @default(autoincrement())
+  amount Decimal           @db.Money
+  user   Int
+  rider  Int
+  status TransactionStatus @default(Pending)
+}

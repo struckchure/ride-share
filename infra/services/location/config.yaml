@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: location-config
+data:
+  DATABASE_URL: postgres://postgres:postgres@location-database:5432
+  DEBUG_MODE: "true"

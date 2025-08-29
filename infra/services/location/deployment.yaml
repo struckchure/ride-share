@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: location-deployment
+  labels:
+    app.kubernetes.io/name: location-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: location-deployment
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: location-deployment
+    spec:
+      containers:
+        - name: location-service
+          image: location-service
+          imagePullPolicy: Never
+          envFrom:
+            - configMapRef:
+                name: location-config
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+        - name: location-database
+          image: postgres:17-alpine
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: postgres
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"

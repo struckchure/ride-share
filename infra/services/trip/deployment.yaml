@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trip-deployment
+  labels:
+    app.kubernetes.io/name: trip-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: trip-deployment
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: trip-deployment
+    spec:
+      containers:
+        - name: trip-service
+          image: trip-service
+          imagePullPolicy: Never
+          envFrom:
+            - configMapRef:
+                name: trip-config
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+        - name: trip-database
+          image: postgres:17-alpine
+          env:
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+            - name: POSTGRES_DB
+              value: postgres
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"

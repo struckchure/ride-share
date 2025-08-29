@@ -1,0 +1,41 @@
+{
+  "$schema": "https://www.krakend.io/schema/v2.10/krakend.json",
+  "name": "Ride Share API",
+  "version": 3,
+  "extra_config": {
+    "auth/validator": { "shared_cache_duration": 900 }
+  },
+  "endpoints": [
+    {
+      "input_query_strings": ["*"],
+      "endpoint": "/api/typicode/{one}",
+      "output_encoding": "json-collection",
+      "backend": [
+        {
+          "url_pattern": "/{one}",
+          "host": ["https://jsonplaceholder.typicode.com"],
+          "is_collection": true
+        }
+      ]
+    },
+    {
+      "input_query_strings": ["*"],
+      "endpoint": "/api/typicode/{one}/{two}",
+      "extra_config": {
+        "auth/validator": {
+          "alg": "RS256",
+          "audience": ["https://dev-r7j3ttzoz7lp6r50.us.auth0.com/api/v2/"],
+          "jwk_url": "https://dev-r7j3ttzoz7lp6r50.us.auth0.com/.well-known/jwks.json",
+          "propagate_claims": [["sub", "x-user"]],
+          "cache": true
+        }
+      },
+      "backend": [
+        {
+          "url_pattern": "/{one}/{two}",
+          "host": ["https://jsonplaceholder.typicode.com"]
+        }
+      ]
+    }
+  ]
+}
