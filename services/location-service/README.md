@@ -1,4 +1,4 @@
-### Location & Matching Service
+### Location Service
 * **Purpose:** To manage the real-time location data of available drivers and to efficiently match riders with the nearest and most suitable driver.
 * **Responsibilities:**
     * Receiving and storing real-time location updates from drivers.
