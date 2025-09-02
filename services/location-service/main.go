@@ -26,5 +26,5 @@ func main() {
 	e.POST("/riders", riderHandler.Create)
 	e.PATCH("/riders", riderHandler.Update)
 
-	e.Logger.Fatal(e.Start(":8080"))
+	e.Logger.Fatal(e.Start(":8081"))
 }

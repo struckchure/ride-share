@@ -17,7 +17,7 @@ enum TransactionStatus {
 model Transaction {
   id     Int               @id @default(autoincrement())
   amount Decimal           @db.Money
-  user   Int
-  rider  Int
+  user   String?
+  trip   Int?
   status TransactionStatus @default(Pending)
 }
